@@ -162,6 +162,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneID.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Vector2Int.h" />

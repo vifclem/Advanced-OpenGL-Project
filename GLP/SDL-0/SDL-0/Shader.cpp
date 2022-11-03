@@ -42,7 +42,7 @@ Shader::Shader(std::string fileName, ShaderType shaderType)
 Shader::~Shader()
 {
 }
-void Shader::GenerateFrom(std::string fileName, ShaderType shaderType)
+void Shader::LoadFrom(std::string fileName, ShaderType shaderType)
 {
 	m_type = shaderType;
 	Load(fileName);

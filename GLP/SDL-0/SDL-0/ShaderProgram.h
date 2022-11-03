@@ -13,7 +13,7 @@ public:
 	ShaderProgram(Shader& vertP, Shader& fragP);
 	~ShaderProgram();
 
-	void GenerateFrom(Shader& vertP, Shader& fragP);
+	void Compose(Shader& vertP, Shader& fragP);
 
 	unsigned int GetID();
 	void Use();

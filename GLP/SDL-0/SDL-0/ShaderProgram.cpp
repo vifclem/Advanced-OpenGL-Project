@@ -21,7 +21,7 @@ ShaderProgram::~ShaderProgram()
 {
 }
 
-void ShaderProgram::GenerateFrom(Shader& vertP, Shader& fragP)
+void ShaderProgram::Compose(Shader& vertP, Shader& fragP)
 {
 	m_id = glCreateProgram();
 	//now attach shaders to use to the program

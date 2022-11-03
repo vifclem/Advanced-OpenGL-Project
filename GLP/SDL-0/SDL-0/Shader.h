@@ -18,12 +18,13 @@ protected:
 	ShaderType m_type;
 	void Load(std::string fileName);
 	const std::string SHADER_PATH = "./Shaders/";
+
 public:
 	Shader() { m_id = 0; m_type = VERTEX; };
 	Shader(std::string fileName, ShaderType shaderType);
 	~Shader();
 
-	void GenerateFrom(std::string fileName, ShaderType shaderType);
+	void LoadFrom(std::string fileName, ShaderType shaderType);
 
 	int GetID() { return m_id; }
 
