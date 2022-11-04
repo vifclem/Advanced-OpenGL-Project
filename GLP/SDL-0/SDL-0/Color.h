@@ -1,4 +1,5 @@
 #pragma once
+
 class Color {
 	
 public:
@@ -40,31 +41,31 @@ public:
 		switch (colorP)
 		{
 		case Color::WHITE:
-			SetColor(1, 1, 1, alphaP);
+			SetColor(1.0f, 1.0f, 1.0f, alphaP);
 			break;
 		case Color::BLACK:
-			SetColor(0, 0, 0, alphaP);
+			SetColor(0.0, 0.0f, 0.0f, alphaP);
 			break;
 		case Color::GREY:
-			SetColor(0.5, 0.5, 0.5, alphaP);
+			SetColor(0.5f, 0.5f, 0.5f, alphaP);
 			break;
 		case Color::RED:
-			SetColor(1, 0, 0, alphaP);
+			SetColor(1.0f, 0.0f, 0.0f, alphaP);
 			break;
 		case Color::GREEN:
-			SetColor(0, 1, 0, alphaP);
+			SetColor(0.0f, 1.0f, 0.0f, alphaP);
 			break;
 		case Color::BLUE:			
-			SetColor(0, 0, 1, alphaP);
+			SetColor(0.0f, 0.0f, 1.0f, alphaP);
 			break;
 		case Color::YELLOW:
-			SetColor(1, 1, 0, alphaP);
+			SetColor(1.0f, 1.0f, 0.0f, alphaP);
 			break;
 		case Color::ORANGE:
-			SetColor(1, 0.65, 0, alphaP);
+			SetColor(1.0f, 0.65f, 0.0f, alphaP);
 			break;
 		case Color::PINK:
-			SetColor(1, 0.41, 0.7, alphaP);
+			SetColor(1.0f, 0.41f, 0.7f, alphaP);
 			break;
 		default:
 			break;
