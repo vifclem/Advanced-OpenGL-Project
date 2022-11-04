@@ -100,7 +100,7 @@
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneID.h" />
+    <ClInclude Include="SceneManagement.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Vector2Int.h" />

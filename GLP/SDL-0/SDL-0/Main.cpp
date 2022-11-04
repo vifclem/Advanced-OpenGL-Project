@@ -8,10 +8,8 @@
 #include "Window.h"
 #include "Color.h"
 #include "BaseScene.h"
-#include "SceneID.h"
+#include "SceneManagement.h"
 using namespace std;
-
-Scene* SceneSelector(SceneID id);
 
 int main(int argc, char* argv[])
 {
@@ -57,23 +55,3 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-Scene* SceneSelector(SceneID id) {
-	switch (id) {
-		case BASE_SCENE: {
-			return new BaseScene();
-			break;
-		}
-		case TESSELLATION: {
-			break;
-		}
-		case GEOMETRY: {
-			break;
-		}
-		case MIP_MAP: {
-			break;
-		}
-		default: {
-			return nullptr;
-		}
-	}
-}
