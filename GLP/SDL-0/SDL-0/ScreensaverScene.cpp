@@ -14,16 +14,12 @@ ScreensaverScene::ScreensaverScene() {
 
 //Load the correct shaders from your files
 void ScreensaverScene::LoadShaders() {
-	//m_animatedVShader.LoadFrom("animatedRainbowVertex.shader", VERTEX);
-	m_vertexShader.LoadFrom("vertexXY.shader", VERTEX);
+	m_vertexShader.LoadFrom("vertexMove.shader", VERTEX);
 	m_fragmentShader.LoadFrom("simpleFragment.shader", FRAGMENT);
 }
 
 void ScreensaverScene::CreateShaderPrograms() {
 	m_simpleProgram.Compose(m_vertexShader, m_fragmentShader);
-	//m_animatedProgram.Compose(m_animatedVShader, m_rainbowFShader);
-
-	m_simpleProgram.Use();
 }
 
 void ScreensaverScene::VerticeInformationSlicer() {
@@ -58,14 +54,20 @@ void ScreensaverScene::SetupScene()
 
 void ScreensaverScene::UpdateScene()
 {
+	float timeValue = (float)SDL_GetTicks() / 1000;
+	float sinusoidValue = (sin(timeValue) / 2.0f) + 0.5f;
 	/*====================================================
-	FIRST SHAPE : ELLIPSE COMPOSED OF 38 TRIANGLES (40 POINTS) / SIMPLE VERTEX COLOR PROGRAM
+	FIRST SHAPE : ELLIPSE COMPOSED OF 20 POINTS / SIMPLE VERTEX COLOR PROGRAM
 	======================================================*/
 	//Selecting the correct shading program (vertex + fragment)
 	m_simpleProgram.Use();
 
-	//We finally draw ! We use the GL_TRIANGLE_STRIP primitive type to use 4 points instead of 6
-	//We draw from vertex 0 and we will be drawing 4 vertices
+	//In which program to find uniform variable to change and what it is called
+	int vertexOffsetLocation = glGetUniformLocation(m_simpleProgram.GetID(), "offset");
+	glUniform3f(vertexOffsetLocation, sinusoidValue/2, sinusoidValue / 2, 0.0f);
+
+	//We use the GL_TRIANGLE_FAN to create triangle that have one point (the first) in common
+	//We draw from vertex 0 and we will be drawing 20 vertices
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 20);
 
 }

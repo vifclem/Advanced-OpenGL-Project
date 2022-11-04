@@ -97,7 +97,7 @@
     <None Include="Shaders\rainbowVertex.shader" />
     <None Include="Shaders\simpleFragment.shader" />
     <None Include="Shaders\simpleVertex.shader" />
-    <None Include="Shaders\vertexXY.shader" />
+    <None Include="Shaders\vertexMove.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
