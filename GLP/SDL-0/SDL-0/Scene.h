@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Window.h"
 #include "Shader.h"
+#include "ShapesGeneration.h"
 
 class Scene
 {

@@ -1,5 +1,4 @@
 ﻿#include "BaseScene.h"
-#include "ShaderProgram.h"
 using namespace std;
 
 const int VERTICE_COUNT = 42;
