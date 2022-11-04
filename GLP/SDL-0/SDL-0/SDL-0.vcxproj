@@ -93,7 +93,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\..\GL\SDL\lib\x86;$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\..\GL\SDL\lib\x86;$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\lib\Release\Win32;$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\bin\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glu32.lib;glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Header.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneID.h" />
     <ClInclude Include="Shader.h" />
