@@ -1,7 +1,9 @@
 #include "Window.h"
 #include <iostream>
 
-Window::Window(int width, int height, Color colorP)
+Vector2F Window::Dimension = Vector2F(0,0);
+
+Window::Window(float width, float height, Color colorP)
 {
 	/////////SETTING UP SDL///
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -14,9 +16,9 @@ Window::Window(int width, int height, Color colorP)
 	}
 
 	//Create a simple window
-	m_windowSize = Vector2Int(width, height);
+	Dimension = Vector2F(width, height);
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
-	m_window = SDL_CreateWindow("OpenGl Demo Scene", center, center, m_windowSize.x, m_windowSize.y, SDL_WINDOW_OPENGL);
+	m_window = SDL_CreateWindow("OpenGl Demo Scene", center, center, Dimension.x, Dimension.y, SDL_WINDOW_OPENGL);
 
 	//Create an OpenGL compatible context to let glew draw on it
 	m_context = SDL_GL_CreateContext(m_window);

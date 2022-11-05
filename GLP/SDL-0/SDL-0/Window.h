@@ -1,20 +1,23 @@
 #pragma once
-#include "Vector2Int.h"
-#include "Color.h"
+
 #include <SDL.h>
 #include "glew.h"
+
+#include "Vector2F.h"
+#include "Color.h"
 
 class Window
 {
 private:
-	Vector2Int m_windowSize;
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 	Color m_backgroundColor;
 
 
 public:
-	Window(int width=1000, int height=700, Color colorP = Color::BLUE);
+	static Vector2F Dimension;
+
+	Window(float width=1000.0f, float height=700.0f, Color colorP = Color(Color::BLUE));
 	~Window(){}
 
 	void ChangeBackgroundColor(Color color);

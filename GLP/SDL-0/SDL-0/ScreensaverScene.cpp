@@ -2,14 +2,13 @@
 
 using namespace std;
 
-const int VERTICE_INFO_COUNT = 40;
 const int POSITION = 0;
 const int POSITION_SIZE = 2; // 2 position infos per vertex
 
 ScreensaverScene::ScreensaverScene() {
-	Shape2D::CreateEllipse(m_vertices, Vector2F(), Vector2F(0.25, 0.15), (VERTICE_INFO_COUNT-8) / 2);
+	Shape2D::CreateEllipse(m_vertices, Vector2F(), Vector2F(0.25f, 0.15f), 20);
 	Shape2D::CreateRectangle(m_vertices, Vector2F(-0.25f, -0.25f), Vector2F(0.5f, 0.3f));
-	//CreateCircle(m_vertices, Vector2F(),  0.25f, (VERTICE_INFO_COUNT-8) / 2);
+	Shape2D::CreateCircle(m_vertices, Vector2F(-0.7f,0.0f),  0.15f, 10);
 }
 
 //Load the correct shaders from your files
@@ -24,15 +23,15 @@ void ScreensaverScene::CreateShaderPrograms() {
 
 void ScreensaverScene::VerticeInformationSlicer() {
 	//Put the vector information in a float array, then in the array buffer 
-	float verticeArray[VERTICE_INFO_COUNT];
+	float* verticeArray = new float[m_vertices.size()]();
 	std::copy(m_vertices.begin(), m_vertices.end(), verticeArray);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticeArray), verticeArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_vertices.size()*sizeof(float), verticeArray, GL_STATIC_DRAW);
 	//Now we split informations of the array : 2 float infos for the position / vertex
 	// Position attribute												
 	glVertexAttribPointer(POSITION, POSITION_SIZE, GL_FLOAT, GL_FALSE, POSITION_SIZE * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(POSITION); //const POSITION = 0
-	
+	delete [] verticeArray;
 }
 
 void ScreensaverScene::SetupScene()
@@ -55,7 +54,7 @@ void ScreensaverScene::SetupScene()
 void ScreensaverScene::UpdateScene()
 {
 	float timeValue = (float)SDL_GetTicks() / 1000;
-	float sinusoidValue = (sin(timeValue) / 2.0f) + 0.5f;
+	float sinusoidValue = 2*(sin(timeValue));
 	/*====================================================
 	FIRST SHAPE : ELLIPSE COMPOSED OF 20 POINTS / SIMPLE VERTEX COLOR PROGRAM
 	======================================================*/
@@ -69,8 +68,15 @@ void ScreensaverScene::UpdateScene()
 	//Drawing
 
 	int currentIndex = 0;
-	currentIndex = Shape2D::DrawEllipse(currentIndex, (VERTICE_INFO_COUNT - 8) / 2);
+	currentIndex = Shape2D::DrawEllipse(currentIndex, 20);
+
+	glUniform3f(vertexOffsetLocation, sinusoidValue / 2, sinusoidValue / 2, 0.0f);
+
 	currentIndex = Shape2D::DrawRectangle(currentIndex);
+
+	glUniform3f(vertexOffsetLocation, 0.0f, sinusoidValue / 2, 0.0f);
+
+	currentIndex = Shape2D::DrawCircle(currentIndex, 10);
 
 }
 

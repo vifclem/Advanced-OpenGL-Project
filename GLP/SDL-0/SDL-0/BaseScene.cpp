@@ -37,17 +37,23 @@ void BaseScene::CreateShaderPrograms() {
 
 void BaseScene::VerticeInformationSlicer() {
 	//Put the vector information in a float array, then in the array buffer 
-	float verticeArray[VERTICE_COUNT];
+	float* verticeArray = new float[m_vertices.size()]();
 	std::copy(m_vertices.begin(), m_vertices.end(), verticeArray);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticeArray), verticeArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), verticeArray, GL_STATIC_DRAW);
 	//Now we split informations of the array : 3 infos for the position / 3 infos for the color
-	// Position attribute												6 float infos / vertex total
-	glVertexAttribPointer(POSITION, POSITION_SIZE, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	// 
+	int totalAttributesSize = POSITION_SIZE + COLOR_SIZE;
+	// Position attribut
+	glVertexAttribPointer(POSITION, POSITION_SIZE, GL_FLOAT, GL_FALSE, totalAttributesSize * sizeof(float), (void*)0);
+
 	glEnableVertexAttribArray(POSITION); //const POSITION = 0
 	// Color attribute											6 float infos / vertex total
-	glVertexAttribPointer(COLOR, COLOR_SIZE, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+
+	glVertexAttribPointer(COLOR, COLOR_SIZE, GL_FLOAT, GL_FALSE, totalAttributesSize * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(COLOR);	//const COLOR = 1
+
+	delete[] verticeArray;
 }
 
 void BaseScene::SetupScene()

@@ -1,17 +1,30 @@
 #pragma once
 #include <vector>
 #include "Vector2F.h"
+#include "Window.h"
 
 using namespace std;
+
 class Shape2D {
+protected:
+	static void RatioCorrection(Vector2F& shapeDimension){
+		float ratio = Window::Dimension.x / Window::Dimension.y;
+		if (ratio > 1) {
+			shapeDimension.y*= ratio;
+		}
+		else {
+			shapeDimension.x *= ratio;
+		}
+	}
 public:
 	static inline void CreateRectangle(vector<float>& vertices, Vector2F center, Vector2F dimensions) {
+		RatioCorrection(dimensions);
 		//B	
 		vertices.push_back(center.x - dimensions.x / 2);
 		vertices.push_back(center.y + dimensions.y / 2);		//	B-----------------C
 		//A														//  | 				/ |
-		vertices.push_back(center.x - dimensions.x / 2);			//  |		 /		  |
-		vertices.push_back(center.y - dimensions.y / 2);			//  | /				  |
+		vertices.push_back(center.x - dimensions.x / 2);		//  |		 /		  |
+		vertices.push_back(center.y - dimensions.y / 2);		//  | /				  |
 		//C														//  A-----------------D
 		vertices.push_back(center.x + dimensions.x / 2);
 		vertices.push_back(center.y + dimensions.y / 2);		//We draw BAC then ACD (AC is the common side)
@@ -24,7 +37,8 @@ public:
 
 	static inline void CreateEllipse(vector<float>& vertices, Vector2F center, Vector2F dimensions, int pointsCount)
 	{
-		float theta = 2 * 3.1415926 / pointsCount;
+		RatioCorrection(dimensions);
+		float theta = 2.0f * 3.1415926f / pointsCount;
 		float cosine = cosf(theta);
 		float sine = sinf(theta);
 
@@ -67,5 +81,7 @@ public:
 		DrawEllipse(startIndex, vertexCount);
 		return startIndex + vertexCount;
 	}
+
+
 
 };
