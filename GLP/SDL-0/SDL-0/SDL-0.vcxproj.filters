@@ -91,7 +91,7 @@
     <ClInclude Include="Vector2F.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ShapesGeneration.h">
+    <ClInclude Include="Shapes2D.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="ScreensaverScene.h">

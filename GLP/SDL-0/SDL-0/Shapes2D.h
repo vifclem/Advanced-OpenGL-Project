@@ -1,0 +1,71 @@
+#pragma once
+#include <vector>
+#include "Vector2F.h"
+
+using namespace std;
+class Shape2D {
+public:
+	static inline void CreateRectangle(vector<float>& vertices, Vector2F center, Vector2F dimensions) {
+		//B	
+		vertices.push_back(center.x - dimensions.x / 2);
+		vertices.push_back(center.y + dimensions.y / 2);		//	B-----------------C
+		//A														//  | 				/ |
+		vertices.push_back(center.x - dimensions.x / 2);			//  |		 /		  |
+		vertices.push_back(center.y - dimensions.y / 2);			//  | /				  |
+		//C														//  A-----------------D
+		vertices.push_back(center.x + dimensions.x / 2);
+		vertices.push_back(center.y + dimensions.y / 2);		//We draw BAC then ACD (AC is the common side)
+		//D
+		vertices.push_back(center.x + dimensions.x / 2);
+		vertices.push_back(center.y - dimensions.y / 2);
+	}
+
+
+
+	static inline void CreateEllipse(vector<float>& vertices, Vector2F center, Vector2F dimensions, int pointsCount)
+	{
+		float theta = 2 * 3.1415926 / pointsCount;
+		float cosine = cosf(theta);
+		float sine = sinf(theta);
+
+
+		float x = 1;//we start at angle = 0 
+		float y = 0;
+		float t = x;
+
+		for (int vert = 0; vert < pointsCount; vert++)
+		{
+			//apply radius and offset
+			vertices.push_back(x * dimensions.x + center.x);
+			vertices.push_back(y * dimensions.y + center.y);
+
+			//apply the rotation matrix
+			t = x;
+			x = cosine * x - sine * y;
+			y = sine * t + cosine * y;
+		}
+	}
+
+
+	static inline void CreateCircle(vector<float>& vertices, Vector2F center, float radius, int pointsCount) {
+		CreateEllipse(vertices, center, Vector2F(radius, radius), pointsCount);
+	}
+
+	static inline int DrawRectangle(int startIndex) {
+		//We will always be drawing 4 vertices
+		glDrawArrays(GL_TRIANGLE_STRIP, startIndex, 4);
+		return startIndex + 4;
+	}
+	static inline int DrawEllipse(int startIndex, int vertexCount) {
+		//We use the GL_TRIANGLE_FAN to create triangle that have one point (the first) in common
+		//We draw from vertex 0 and we will be drawing 20 vertices
+		glDrawArrays(GL_TRIANGLE_FAN, startIndex, vertexCount);
+		return startIndex + vertexCount;
+	}
+
+	static inline int DrawCircle(int startIndex, int vertexCount) {
+		DrawEllipse(startIndex, vertexCount);
+		return startIndex + vertexCount;
+	}
+
+};

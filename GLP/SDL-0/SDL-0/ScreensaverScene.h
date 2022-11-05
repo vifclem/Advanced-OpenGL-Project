@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "ShaderProgram.h"
+#include "Shapes2D.h"
 
 class ScreensaverScene : public Scene
 {

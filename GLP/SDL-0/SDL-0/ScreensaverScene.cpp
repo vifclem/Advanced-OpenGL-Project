@@ -7,8 +7,8 @@ const int POSITION = 0;
 const int POSITION_SIZE = 2; // 2 position infos per vertex
 
 ScreensaverScene::ScreensaverScene() {
-	CreateEllipse(m_vertices, Vector2F(), Vector2F(0.25, 0.15), VERTICE_INFO_COUNT / 2);
-	//CreateRectangle(m_vertices, Vector2F(-0.25f, -0.25f), Vector2F(0.5f, 0.3f));
+	Shape2D::CreateEllipse(m_vertices, Vector2F(), Vector2F(0.25, 0.15), (VERTICE_INFO_COUNT-8) / 2);
+	Shape2D::CreateRectangle(m_vertices, Vector2F(-0.25f, -0.25f), Vector2F(0.5f, 0.3f));
 	//CreateCircle(m_vertices, Vector2F(),  0.25f, (VERTICE_INFO_COUNT-8) / 2);
 }
 
@@ -64,11 +64,13 @@ void ScreensaverScene::UpdateScene()
 
 	//In which program to find uniform variable to change and what it is called
 	int vertexOffsetLocation = glGetUniformLocation(m_simpleProgram.GetID(), "offset");
-	glUniform3f(vertexOffsetLocation, sinusoidValue/2, sinusoidValue / 2, 0.0f);
+	glUniform3f(vertexOffsetLocation, sinusoidValue/2, 0.0f, 0.0f);
 
-	//We use the GL_TRIANGLE_FAN to create triangle that have one point (the first) in common
-	//We draw from vertex 0 and we will be drawing 20 vertices
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 20);
+	//Drawing
+
+	int currentIndex = 0;
+	currentIndex = Shape2D::DrawEllipse(currentIndex, (VERTICE_INFO_COUNT - 8) / 2);
+	currentIndex = Shape2D::DrawRectangle(currentIndex);
 
 }
 
