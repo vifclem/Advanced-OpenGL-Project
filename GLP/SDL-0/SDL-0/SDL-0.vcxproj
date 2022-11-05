@@ -87,6 +87,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ScreensaverScene.cpp" />
+    <ClCompile Include="TessellationScene.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,11 @@
     <None Include="Shaders\rainbowVertex.shader" />
     <None Include="Shaders\simpleFragment.shader" />
     <None Include="Shaders\simpleVertex.shader" />
+    <None Include="Shaders\tessellationControl.shader" />
+    <None Include="Shaders\tessellationEval.shader" />
+    <None Include="Shaders\tessellationFragment.shader" />
+    <None Include="Shaders\tessellationGeometry.shader" />
+    <None Include="Shaders\tessellationVertex.shader" />
     <None Include="Shaders\vertexMove.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +114,7 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Shapes2D.h" />
     <ClInclude Include="ScreensaverScene.h" />
+    <ClInclude Include="TessellationScene.h" />
     <ClInclude Include="Vector2F.h" />
     <ClInclude Include="Vector2Int.h" />
     <ClInclude Include="Window.h" />

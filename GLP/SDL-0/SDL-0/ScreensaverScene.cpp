@@ -18,7 +18,7 @@ void ScreensaverScene::LoadShaders() {
 }
 
 void ScreensaverScene::CreateShaderPrograms() {
-	m_simpleProgram.Compose(m_vertexShader, m_fragmentShader);
+	m_shaderProgram.Compose(vector<Shader*>{&m_vertexShader, &m_fragmentShader});
 }
 
 void ScreensaverScene::VerticeInformationSlicer() {
@@ -59,10 +59,10 @@ void ScreensaverScene::UpdateScene()
 	FIRST SHAPE : ELLIPSE COMPOSED OF 20 POINTS / SIMPLE VERTEX COLOR PROGRAM
 	======================================================*/
 	//Selecting the correct shading program (vertex + fragment)
-	m_simpleProgram.Use();
+	m_shaderProgram.Use();
 
 	//In which program to find uniform variable to change and what it is called
-	int vertexOffsetLocation = glGetUniformLocation(m_simpleProgram.GetID(), "offset");
+	int vertexOffsetLocation = glGetUniformLocation(m_shaderProgram.GetID(), "offset");
 	glUniform3f(vertexOffsetLocation, sinusoidValue/2, 0.0f, 0.0f);
 
 	//Drawing

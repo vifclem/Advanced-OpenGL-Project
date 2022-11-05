@@ -42,6 +42,9 @@
     <ClCompile Include="ScreensaverScene.cpp">
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="TessellationScene.cpp">
+      <Filter>Fichiers sources\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\aminatedFragment.shader">
@@ -66,6 +69,21 @@
       <Filter>Fichiers de ressources</Filter>
     </None>
     <None Include="Shaders\vertexMove.shader">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\tessellationControl.shader">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\tessellationEval.shader">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\tessellationFragment.shader">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\tessellationGeometry.shader">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\tessellationVertex.shader">
       <Filter>Fichiers de ressources</Filter>
     </None>
   </ItemGroup>
@@ -101,6 +119,9 @@
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
+      <Filter>Fichiers d%27en-tête\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TessellationScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

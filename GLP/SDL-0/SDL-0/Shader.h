@@ -7,7 +7,10 @@
 
 enum ShaderType {
 	VERTEX,
-	FRAGMENT
+	FRAGMENT,
+	TESSELLATION_CONTROL,
+	TESSELLATION_EVALUATION,
+	GEOMETRY
 };
 
 class Shader
@@ -17,6 +20,7 @@ protected:
 	unsigned int m_id;
 	ShaderType m_type;
 	void Load(std::string fileName);
+	//Feel free to change the shader path  if needed
 	const std::string SHADER_PATH = "./Shaders/";
 
 public:

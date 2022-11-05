@@ -1,19 +1,17 @@
 #pragma once
 #include "Shader.h"
+#include <vector>
 
 class ShaderProgram
 {
 private:
 	unsigned int m_id;
-	unsigned m_vert;
-	unsigned m_frag;
 
 public:
 	ShaderProgram();
-	ShaderProgram(Shader& vertP, Shader& fragP);
 	~ShaderProgram();
 
-	void Compose(Shader& vertP, Shader& fragP);
+	void Compose(std::vector<Shader*> shaders);
 
 	unsigned int GetID();
 	void Use();

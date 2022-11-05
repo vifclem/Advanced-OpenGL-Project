@@ -29,8 +29,8 @@ void BaseScene::LoadShaders() {
 }
 
 void BaseScene::CreateShaderPrograms() {
-	m_simpleProgram.Compose(m_rainbowVShader, m_rainbowFShader);
-	m_animatedProgram.Compose(m_animatedVShader, m_rainbowFShader);
+	m_simpleProgram.Compose(vector<Shader*>{&m_rainbowVShader, & m_rainbowFShader});
+	m_animatedProgram.Compose(vector<Shader*>{&m_animatedVShader, & m_rainbowFShader});
 
 	m_simpleProgram.Use();
 }

@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "Shader.h"
-
+#include "ShaderProgram.h"
 
 class Scene
 {
@@ -12,6 +12,7 @@ protected:
 	std::vector<float> m_vertices;
 	virtual void LoadShaders() = 0;
 	virtual void CreateShaderPrograms() = 0;
+	//Splits informations of the array into attributes
 	virtual void VerticeInformationSlicer() = 0;
 
 public:

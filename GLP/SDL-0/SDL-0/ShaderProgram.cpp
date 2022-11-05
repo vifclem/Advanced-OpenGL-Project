@@ -1,34 +1,23 @@
 #include "ShaderProgram.h"
+using namespace std;
+
 
 ShaderProgram::ShaderProgram()
 {
 	m_id = 0;
 }
 
-ShaderProgram::ShaderProgram(Shader& vertP, Shader& fragP)
-{
-	m_id = glCreateProgram();
-	//now attach shaders to use to the program
-	m_vert = vertP.GetID();
-	m_frag = fragP.GetID();
-	glAttachShader(m_id, vertP.GetID());
-	glAttachShader(m_id, fragP.GetID());
-	//and link it
-	glLinkProgram(m_id);
-}
-
 ShaderProgram::~ShaderProgram()
 {
 }
 
-void ShaderProgram::Compose(Shader& vertP, Shader& fragP)
+void ShaderProgram::Compose(vector<Shader*> shaders)
 {
 	m_id = glCreateProgram();
 	//now attach shaders to use to the program
-	m_vert = vertP.GetID();
-	m_frag = fragP.GetID();
-	glAttachShader(m_id, vertP.GetID());
-	glAttachShader(m_id, fragP.GetID());
+	for (int s = 0; s < shaders.size(); s++) {
+		glAttachShader(m_id, shaders[s]->GetID());
+	}
 	//and link it
 	glLinkProgram(m_id);
 }

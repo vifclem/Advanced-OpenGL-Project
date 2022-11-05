@@ -25,6 +25,19 @@ void Shader::Load(std::string fileName)
 			m_id = glCreateShader(GL_FRAGMENT_SHADER);
 			break;
 		}
+		case TESSELLATION_CONTROL: {
+			m_id = glCreateShader(GL_TESS_CONTROL_SHADER);
+			break;
+		}		
+		case TESSELLATION_EVALUATION: {
+			m_id = glCreateShader(GL_TESS_EVALUATION_SHADER);
+			break;
+		}
+		case GEOMETRY: {
+			m_id = glCreateShader(GL_GEOMETRY_SHADER);
+			break;
+		}
+								
 	}
 
 	const char* source = m_code.c_str();
