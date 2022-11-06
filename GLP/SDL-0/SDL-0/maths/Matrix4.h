@@ -337,7 +337,9 @@ public:
 			xaxis.z, yaxis.z, zaxis.z, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		};
-		return Matrix4(temp) * Matrix4::createTranslation(Vector3(-eye.x, -eye.y, -eye.z));
+		Matrix4 t = Matrix4(temp);
+		Matrix4 translation = Matrix4::createTranslation(Vector3(-eye.x, -eye.y, -eye.z));
+		return t* translation;
 	}
 
 	static Matrix4 createOrtho(float width, float height, float near, float far)

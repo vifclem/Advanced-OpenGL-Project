@@ -53,9 +53,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\include\GL;$(SolutionDir)\..\..\GL\SDL\include;$(SolutionDir)\SDL-0\maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\include\GL;$(SolutionDir)\..\..\GL\SDL\include;$(SolutionDir)\SDL-0\maths;$(SolutionDir)\SDL-0\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,11 +82,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseScene.cpp" />
+    <ClCompile Include="Engine\Assets.cpp" />
+    <ClCompile Include="Engine\MeshObject.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\TextureKtx.cpp" />
+    <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="maths\Matrix4.cpp" />
+    <ClCompile Include="maths\Matrix4Row.cpp" />
+    <ClCompile Include="maths\Quaternion.cpp" />
+    <ClCompile Include="maths\Vector2.cpp" />
+    <ClCompile Include="maths\Vector3.cpp" />
+    <ClCompile Include="maths\Vector4.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ScreensaverScene.cpp" />
+    <ClCompile Include="TerrainTessellationScene.cpp" />
     <ClCompile Include="TessellationModesScene.cpp" />
     <ClCompile Include="TessellationScene.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -99,6 +111,10 @@
     <None Include="Shaders\rainbowVertex.shader" />
     <None Include="Shaders\simpleFragment.shader" />
     <None Include="Shaders\simpleVertex.shader" />
+    <None Include="Shaders\terrainTessControl.shader" />
+    <None Include="Shaders\terrainTessEvaluation.shader" />
+    <None Include="Shaders\terrainTessFragment.shader" />
+    <None Include="Shaders\terrainTessVertex.shader" />
     <None Include="Shaders\tessellationControl.shader" />
     <None Include="Shaders\tessellationEval.shader" />
     <None Include="Shaders\tessellationFragment.shader" />
@@ -113,12 +129,26 @@
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Engine\Assets.h" />
+    <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\MeshObject.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\TextureKtx.h" />
+    <ClInclude Include="Engine\Timer.h" />
+    <ClInclude Include="maths\Maths.h" />
+    <ClInclude Include="maths\Matrix4.h" />
+    <ClInclude Include="maths\Matrix4Row.h" />
+    <ClInclude Include="maths\Quaternion.h" />
+    <ClInclude Include="maths\Vector2.h" />
+    <ClInclude Include="maths\Vector3.h" />
+    <ClInclude Include="maths\Vector4.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManagement.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Shapes2D.h" />
     <ClInclude Include="ScreensaverScene.h" />
+    <ClInclude Include="TerrainTessellationScene.h" />
     <ClInclude Include="TessellationModesScene.h" />
     <ClInclude Include="TessellationScene.h" />
     <ClInclude Include="Window.h" />

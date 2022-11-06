@@ -1,14 +1,15 @@
 #pragma once
 #include "BaseScene.h"
 #include "ScreensaverScene.h"
-#include "TessellationScene.h"
 #include "TessellationModesScene.h"
+#include "TerrainTessellationScene.h"
 
 enum SceneID {
 	BASE_SCENE,
 	DEMO_SCENE,
 	TESSELLATION,
 	TESSELLATION_MODES,
+	TERRAIN_TESSELLATION,
 	MIP_MAP
 };
 
@@ -28,6 +29,10 @@ Scene* SceneSelector(SceneID id) {
 	}
 	case TESSELLATION_MODES: {
 		return new TessellationModesScene();
+		break;
+	}
+	case TERRAIN_TESSELLATION: {
+		return new TerrainTessellationScene();
 		break;
 	}
 	case MIP_MAP: {

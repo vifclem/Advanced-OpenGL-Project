@@ -17,9 +17,10 @@ protected:
 
 public:
 	Scene(std::string nameP = "Demo");
-	~Scene(){}
+	~Scene();
 	
 	virtual void SetupScene() = 0;
 	virtual void UpdateScene() = 0;
+	virtual void HandleInputs(){}
 };
 
