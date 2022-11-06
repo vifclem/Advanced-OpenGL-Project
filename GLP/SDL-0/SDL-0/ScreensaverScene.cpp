@@ -6,9 +6,9 @@ const int POSITION = 0;
 const int POSITION_SIZE = 2; // 2 position infos per vertex
 
 ScreensaverScene::ScreensaverScene() {
-	Shape2D::CreateEllipse(m_vertices, Vector2F(), Vector2F(0.25f, 0.15f), 20);
-	Shape2D::CreateRectangle(m_vertices, Vector2F(-0.25f, -0.25f), Vector2F(0.5f, 0.3f));
-	Shape2D::CreateCircle(m_vertices, Vector2F(-0.7f,0.0f),  0.15f, 10);
+	Shape2D::CreateEllipse(m_vertices, Vector2(), Vector2(0.25f, 0.15f), 20);
+	Shape2D::CreateRectangle(m_vertices, Vector2(-0.25f, -0.25f), Vector2(0.5f, 0.3f));
+	Shape2D::CreateCircle(m_vertices, Vector2(-0.7f,0.0f),  0.15f, 10);
 }
 
 //Load the correct shaders from your files

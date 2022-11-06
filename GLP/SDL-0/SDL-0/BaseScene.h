@@ -15,6 +15,7 @@ private :
 	void VerticeInformationSlicer();
 public:
 	BaseScene();
+	~BaseScene() {}
 	void SetupScene();
 	void UpdateScene();
 

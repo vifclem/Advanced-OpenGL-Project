@@ -55,7 +55,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\include\GL;$(SolutionDir)\..\..\GL\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\glew-2.2.0-win32\glew-2.2.0\include\GL;$(SolutionDir)\..\..\GL\SDL\include;$(SolutionDir)\SDL-0\maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +87,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ScreensaverScene.cpp" />
+    <ClCompile Include="TessellationModesScene.cpp" />
     <ClCompile Include="TessellationScene.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -103,6 +104,10 @@
     <None Include="Shaders\tessellationFragment.shader" />
     <None Include="Shaders\tessellationGeometry.shader" />
     <None Include="Shaders\tessellationVertex.shader" />
+    <None Include="Shaders\tessModesControl.shader" />
+    <None Include="Shaders\tessModesEvaluation.shader" />
+    <None Include="Shaders\tessModesFragment.shader" />
+    <None Include="Shaders\tessModesVertex.shader" />
     <None Include="Shaders\vertexMove.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +119,8 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Shapes2D.h" />
     <ClInclude Include="ScreensaverScene.h" />
+    <ClInclude Include="TessellationModesScene.h" />
     <ClInclude Include="TessellationScene.h" />
-    <ClInclude Include="Vector2F.h" />
-    <ClInclude Include="Vector2Int.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

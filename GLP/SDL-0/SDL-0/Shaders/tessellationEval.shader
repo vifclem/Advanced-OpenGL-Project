@@ -8,3 +8,4 @@ void main(void)
         gl_TessCoord.y * gl_in[1].gl_Position +
         gl_TessCoord.z * gl_in[2].gl_Position);
 }
+

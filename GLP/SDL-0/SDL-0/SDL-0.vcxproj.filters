@@ -19,6 +19,18 @@
     <Filter Include="Fichiers sources\Scenes">
       <UniqueIdentifier>{0889fbdb-c376-445d-99d6-25c5d3d13415}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers de ressources\Base Scene">
+      <UniqueIdentifier>{1d6d93c7-05ff-4929-a634-9cbf6fd3ddaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers de ressources\Demo Scene">
+      <UniqueIdentifier>{9e93fad5-8073-4253-b153-eeffdbdbd9d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers de ressources\Tessellation Simple">
+      <UniqueIdentifier>{995ca06f-9b9b-40d2-855a-4bd1643ff492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers de ressources\Tessellation Modes">
+      <UniqueIdentifier>{89bf5a59-a64c-4d06-8a3b-fae32f63b4c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,53 +57,65 @@
     <ClCompile Include="TessellationScene.cpp">
       <Filter>Fichiers sources\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="TessellationModesScene.cpp">
+      <Filter>Fichiers sources\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\aminatedFragment.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Base Scene</Filter>
     </None>
     <None Include="Shaders\animatedRainbowFrag.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Base Scene</Filter>
     </None>
     <None Include="Shaders\animatedRainbowVertex.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Base Scene</Filter>
     </None>
     <None Include="Shaders\rainbowFragment.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Base Scene</Filter>
     </None>
     <None Include="Shaders\rainbowVertex.shader">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\simpleVertex.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Base Scene</Filter>
     </None>
     <None Include="Shaders\simpleFragment.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Demo Scene</Filter>
+    </None>
+    <None Include="Shaders\simpleVertex.shader">
+      <Filter>Fichiers de ressources\Demo Scene</Filter>
     </None>
     <None Include="Shaders\vertexMove.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Demo Scene</Filter>
     </None>
     <None Include="Shaders\tessellationControl.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Tessellation Simple</Filter>
     </None>
     <None Include="Shaders\tessellationEval.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Tessellation Simple</Filter>
     </None>
     <None Include="Shaders\tessellationFragment.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Tessellation Simple</Filter>
     </None>
     <None Include="Shaders\tessellationGeometry.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Tessellation Simple</Filter>
     </None>
     <None Include="Shaders\tessellationVertex.shader">
-      <Filter>Fichiers de ressources</Filter>
+      <Filter>Fichiers de ressources\Tessellation Simple</Filter>
+    </None>
+    <None Include="Shaders\tessModesVertex.shader">
+      <Filter>Fichiers de ressources\Tessellation Modes</Filter>
+    </None>
+    <None Include="Shaders\tessModesFragment.shader">
+      <Filter>Fichiers de ressources\Tessellation Modes</Filter>
+    </None>
+    <None Include="Shaders\tessModesControl.shader">
+      <Filter>Fichiers de ressources\Tessellation Modes</Filter>
+    </None>
+    <None Include="Shaders\tessModesEvaluation.shader">
+      <Filter>Fichiers de ressources\Tessellation Modes</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2Int.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
@@ -104,9 +128,6 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="SceneManagement.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2F.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Shapes2D.h">
@@ -122,6 +143,9 @@
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="TessellationScene.h">
+      <Filter>Fichiers d%27en-tête\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TessellationModesScene.h">
       <Filter>Fichiers d%27en-tête\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

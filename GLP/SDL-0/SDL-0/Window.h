@@ -18,7 +18,7 @@ public:
 	static Vector2 Dimension;
 
 	Window(float width=1000.0f, float height=700.0f, Color colorP = Color(Color::BLUE));
-	~Window(){}
+	~Window() {}
 
 	void ChangeBackgroundColor(Color color);
 	void ChangeBackgroundColor(float rP, float gP, float bP, float aP);

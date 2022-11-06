@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
-#include "Vector2F.h"
+#include "Vector2.h"
 #include "Window.h"
 
 using namespace std;
 
 class Shape2D {
 protected:
-	static void RatioCorrection(Vector2F& shapeDimension){
+	static void RatioCorrection(Vector2& shapeDimension){
 		float ratio = Window::Dimension.x / Window::Dimension.y;
 		if (ratio > 1) {
 			shapeDimension.y*= ratio;
@@ -17,7 +17,7 @@ protected:
 		}
 	}
 public:
-	static inline void CreateRectangle(vector<float>& vertices, Vector2F center, Vector2F dimensions) {
+	static inline void CreateRectangle(vector<float>& vertices, Vector2 center, Vector2 dimensions) {
 		RatioCorrection(dimensions);
 		//B	
 		vertices.push_back(center.x - dimensions.x / 2);
@@ -35,7 +35,7 @@ public:
 
 
 
-	static inline void CreateEllipse(vector<float>& vertices, Vector2F center, Vector2F dimensions, int pointsCount)
+	static inline void CreateEllipse(vector<float>& vertices, Vector2 center, Vector2 dimensions, int pointsCount)
 	{
 		RatioCorrection(dimensions);
 		float theta = 2.0f * 3.1415926f / pointsCount;
@@ -61,8 +61,8 @@ public:
 	}
 
 
-	static inline void CreateCircle(vector<float>& vertices, Vector2F center, float radius, int pointsCount) {
-		CreateEllipse(vertices, center, Vector2F(radius, radius), pointsCount);
+	static inline void CreateCircle(vector<float>& vertices, Vector2 center, float radius, int pointsCount) {
+		CreateEllipse(vertices, center, Vector2(radius, radius), pointsCount);
 	}
 
 	static inline int DrawRectangle(int startIndex) {

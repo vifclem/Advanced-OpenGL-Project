@@ -18,7 +18,7 @@ Window::Window(float width, float height, Color colorP)
 	//Create a simple window
 	Dimension = Vector2(width, height);
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
-	m_window = SDL_CreateWindow("OpenGl Demo Scene", center, center, Dimension.x, Dimension.y, SDL_WINDOW_OPENGL);
+	m_window = SDL_CreateWindow("OpenGl Demo Scene", center, center, (int)Dimension.x, (int)Dimension.y, SDL_WINDOW_OPENGL);
 
 	//Create an OpenGL compatible context to let glew draw on it
 	m_context = SDL_GL_CreateContext(m_window);
@@ -31,7 +31,7 @@ Window::Window(float width, float height, Color colorP)
 	}
 
 	//Set the viewing frame through which we will see the objects
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, (int)width, (int)height);
 
 	//Use depth management
 	glEnable(GL_DEPTH_TEST);

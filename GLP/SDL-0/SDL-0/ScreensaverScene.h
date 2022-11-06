@@ -13,6 +13,7 @@ private:
 	void VerticeInformationSlicer();
 public:
 	ScreensaverScene();
+	~ScreensaverScene() {}
 	void SetupScene();
 	void UpdateScene();
 };
