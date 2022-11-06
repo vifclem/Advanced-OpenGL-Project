@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include "glew.h"
 
-#include "Vector2F.h"
+#include "Vector2.h"
 #include "Color.h"
 
 class Window
@@ -15,7 +15,7 @@ private:
 
 
 public:
-	static Vector2F Dimension;
+	static Vector2 Dimension;
 
 	Window(float width=1000.0f, float height=700.0f, Color colorP = Color(Color::BLUE));
 	~Window(){}

@@ -1,7 +1,7 @@
 #include "Window.h"
 #include <iostream>
 
-Vector2F Window::Dimension = Vector2F(0,0);
+Vector2 Window::Dimension = Vector2(0,0);
 
 Window::Window(float width, float height, Color colorP)
 {
@@ -16,7 +16,7 @@ Window::Window(float width, float height, Color colorP)
 	}
 
 	//Create a simple window
-	Dimension = Vector2F(width, height);
+	Dimension = Vector2(width, height);
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
 	m_window = SDL_CreateWindow("OpenGl Demo Scene", center, center, Dimension.x, Dimension.y, SDL_WINDOW_OPENGL);
 
