@@ -1,57 +1,38 @@
 ﻿#include <iostream>
-
 #include <SDL.h>
-#include "glew.h"
-#include <fstream>
-#include <string>
-
-#include "Window.h"
-#include "Color.h"
-#include "BaseScene.h"
-#include "SceneManagement.h"
+#include <glew.h>
 using namespace std;
+//#define GLEW_STATIC
 
 int main(int argc, char* argv[])
 {
-	//Creating a new window w/ dimensions and background color (optional) 
-	Window window(960.0f, 540.0f, Color(0.0f, 0.0f, 0.2f, 1.0f));
-
-	//Use a SceneID (see SceneManagement.h) to quickly setup the correct scene for the build!
-	Scene* scene = SceneSelector(TERRAIN_TESSELLATION);
-	if (scene == nullptr) return 1; //Scene doesn't exist yet
-
-	//Preparing shaders, shader programs, vao and vbo
-	scene->SetupScene();
-
-
-	//Loop that keeps the window alive
-	bool isRunning = true;
-	while (isRunning) {
-		// Inputs
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-			//If the user tries to quit the window, stop execution
-			case SDL_QUIT:
-				isRunning = false;
-				break;
-			default:
-				break;
-			}
-		}
-		// Clear the screen
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-		//Drawing the shapes and filling the buffer
-		scene->UpdateScene();
-		//Swap the buffers --> Display the newly computed one, hide the one displayed last frame
-		window.Update();
-
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	{
+		cout << "SDL initialization failed. SDL Error: " << SDL_GetError();
 	}
-	
-	// Quit
-	window.Close();
+	else
+	{
+		cout << "SDL initialization succeeded!\n";
+	}
+	///////////SETTING UP SDL/////////////
+	//Create a simple window
+	int width = 400;
+	int height = 300;
+	unsigned int center = SDL_WINDOWPOS_CENTERED;
+	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
+	//SDL_WINDOW_OPENGL is a u32 flag !
 
 
+	//Create an OpenGL compatible context to let glew draw on it
+	SDL_GLContext Context = SDL_GL_CreateContext(Window);
+
+	/////////SETTING UP OPENGL WITH GLEW///
+	//Initialize glew
+	glewExperimental = GL_TRUE;
+	if (glewInit() == GLEW_OK) {
+		cout << "Glew initialized successfully\n";
+	}
+
+	cin.get();
 	return 0;
 }
-
