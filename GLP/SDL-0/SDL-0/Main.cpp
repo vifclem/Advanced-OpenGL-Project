@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
-			//If the user tries to quit the window, stop execution
+			//If the user tries to quit the window, stop executio
 			case SDL_QUIT:
 				isRunning = false;
 				break;
