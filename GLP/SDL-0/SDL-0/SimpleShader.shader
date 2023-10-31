@@ -5,6 +5,7 @@ in vec3 color;
 out vec4 ourColor;
 uniform float offsetX = 0.3;
 
+
 void main()
 {
     
