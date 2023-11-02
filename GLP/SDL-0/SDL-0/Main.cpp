@@ -10,15 +10,28 @@ using namespace std;
 
 string LoadShader(string fileName);
 
-
+float maxX = 0.4f;
+float minX = -0.4f;
+float updatePosX = 0;
+float updatePosY = 0;
+float speedX = 0.01;
+float speedY = 0.03;
 int main(int argc, char* argv[])
 {
 
 	float vertices[] = {
 		// positions             // colors
-			 0.25f, -0.25f, 0.0f,  1.0f, 0.0f, 0.0f,
-			-0.25f, -0.25f, 0.0f,  0.0f, 1.0f, 0.0f,
-			 0.0f,  0.25f, 0.0f,  0.0f, 0.0f, 1.0f
+
+
+	    -0.2f, 0.4f, 0.0f,  1.0f, 0.0f, 0.0f,
+		-0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
+
+		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+		 0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.2f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f,
+
+			 
 	};
 
 
@@ -158,14 +171,26 @@ int main(int argc, char* argv[])
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
 
-		float timeValue = (float)SDL_GetTicks() / 1000;
-		float offset = (sin(timeValue));
-		int offsetLocation = glGetUniformLocation(shaderProgram, "offsetX");
+		updatePosX += speedX;
+		updatePosY += speedY;
+		
+		if (updatePosX + maxX >= 1) speedX *= -1;
+		else if (updatePosX + minX <= -1) speedX *= -1;
+		else if (updatePosY + maxX >= 1 && speedY >0) speedY *= -1;
+		else if (updatePosY + minX <= -1 && speedY < 0) speedY *= -1;
+
+
+
+		int location = glGetUniformLocation(shaderProgram, "updatePos");
+		
 		glUseProgram(shaderProgram);
-		glUniform1f(offsetLocation, offset);
+		glUniform2f(location, updatePosX, updatePosY);
+		
+		
+		
 		
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer
 		

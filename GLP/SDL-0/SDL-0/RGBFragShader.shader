@@ -7,6 +7,6 @@ in vec4 newPos;
 void main()
 {
 
-    FragColor = newPos;
+    FragColor = (newPos + 1)/2;
     
 }
