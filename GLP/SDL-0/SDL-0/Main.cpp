@@ -16,9 +16,9 @@ int main(int argc, char* argv[])
 
 	float vertices[] = {
 		// positions             // colors
-			 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
-			 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f
+			 0.25f, -0.25f, 0.0f,  1.0f, 0.0f, 0.0f,
+			-0.25f, -0.25f, 0.0f,  0.0f, 1.0f, 0.0f,
+			 0.0f,  0.25f, 0.0f,  0.0f, 0.0f, 1.0f
 	};
 
 
@@ -32,8 +32,8 @@ int main(int argc, char* argv[])
 	}
 	///////////SETTING UP SDL/////////////
 	//Create a simple window
-	int width = 400;
-	int height = 300;
+	int width = 800;
+	int height = 600;
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
 	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
 	//SDL_WINDOW_OPENGL is a u32 flag !
@@ -157,6 +157,12 @@ int main(int argc, char* argv[])
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the screen
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
+
+		float timeValue = (float)SDL_GetTicks() / 1000;
+		float offset = (sin(timeValue));
+		int offsetLocation = glGetUniformLocation(shaderProgram, "offsetX");
+		glUseProgram(shaderProgram);
+		glUniform1f(offsetLocation, offset);
 		
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
