@@ -38,9 +38,14 @@ int main(int argc, char* argv[])
 		// positions             // colors
 
 
-		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-		 0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
-		 0.2f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f,
+		 0.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+		 0.0f, -1.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+
+		 -0.92f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
+		 -0.92f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
+		
+		  0.92f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
+		  0.92f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
 
 
 	};
@@ -239,7 +244,11 @@ int main(int argc, char* argv[])
 
 		glUseProgram(shaderProgram2);
 		glBindVertexArray(vao2);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_LINES, 0, 3);
+
+		glUseProgram(shaderProgram2);
+		glBindVertexArray(vao2);
+		glDrawArrays(GL_LINES, 2 , 4);
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer
 		
