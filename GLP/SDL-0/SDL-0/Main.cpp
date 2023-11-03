@@ -233,12 +233,6 @@ int main(int argc, char* argv[])
 				break;
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
-				case SDLK_UP:
-					if(paddleRPosY + paddleMaxY <= 1)paddleRPosY += 0.1;
-					break;
-				case SDLK_DOWN:
-					if (paddleRPosY + paddleMinY >= -1)paddleRPosY -= 0.1;
-					break;
 				case SDLK_z:
 					if (paddleLPosY + paddleMaxY <= 1)paddleLPosY += 0.1;
 					break;
@@ -267,6 +261,10 @@ int main(int argc, char* argv[])
 		//Right paddle IA
 		if (ballPosY + 0.2 <= 1 && ballPosY - 0.2 >= -1 ) paddleRPosY = ballPosY;
 
+		//game over TEMPORAIRE 
+		if (playerScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); }
+		if (ennemieScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); }
+
 		glUseProgram(shaderProgram);
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, ballPosX, ballPosY);
@@ -283,11 +281,6 @@ int main(int argc, char* argv[])
 		glUniform2f(location, 0, 0);
 		glDrawArrays(GL_LINES, 0, 2);
 
-		
-
-		
-
-		
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer
 		
