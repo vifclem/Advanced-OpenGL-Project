@@ -244,10 +244,12 @@ int main(int argc, char* argv[])
 			default:
 				break;
 			}
+			
 		}
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the screen
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
+		
 
 		ballPosX += speedX;
 		ballPosY += speedY;
@@ -260,7 +262,7 @@ int main(int argc, char* argv[])
 		
 
 
-
+		
 		glUseProgram(shaderProgram);
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, ballPosX, ballPosY);
@@ -268,12 +270,18 @@ int main(int argc, char* argv[])
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		
 		
+		
 		glBindVertexArray(vao2);
 		glUniform2f(location, paddleRPosX, paddleRPosY);
 		glDrawArrays(GL_TRIANGLE_STRIP, 6, 4);
-		
 		glUniform2f(location, paddleLPosX, paddleLPosY);
 		glDrawArrays(GL_TRIANGLE_STRIP, 2 , 4);
+		glUniform2f(location, 0, 0);
+		glDrawArrays(GL_LINES, 0, 2);
+
+		
+
+		
 
 		
 
