@@ -10,8 +10,8 @@ using namespace std;
 
 string LoadShader(string fileName);
 
-float maxX = 0.4f;
-float minX = -0.4f;
+float maxX = 0.1f;
+float minX = 0.0f;
 float updatePosX = 0;
 float updatePosY = 0;
 float speedX = 0.02;
@@ -23,13 +23,13 @@ int main(int argc, char* argv[])
 		// positions             // colors
 
 
-	    -0.2f, 0.4f, 0.0f,  1.0f, 0.0f, 0.0f,
-		-0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
-		 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
+	    
 
 		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-		 0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
-		 0.2f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f,
+		 0.0f, 0.1f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.1f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
+		 0.0f, 0.1f, 0.0f, 1.0f, 0.0f, 0.0f,
+
 
 			 
 	};
@@ -61,8 +61,8 @@ int main(int argc, char* argv[])
 	}
 	///////////SETTING UP SDL/////////////
 	//Create a simple window
-	int width = 800;
-	int height = 600;
+	int width = 1000;
+	int height = 800;
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
 	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
 	//SDL_WINDOW_OPENGL is a u32 flag !
@@ -218,6 +218,15 @@ int main(int argc, char* argv[])
 			case SDL_QUIT:
 				isRunning = false;
 				break;
+			case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_UP:
+					updatePosY += 0.1;
+					break;
+				case SDLK_DOWN:
+					updatePosY -= 0.1;
+					break;
+				}
 			default:
 				break;
 			}
@@ -240,7 +249,7 @@ int main(int argc, char* argv[])
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, updatePosX, updatePosY);
 		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
 
 		glUseProgram(shaderProgram2);
 		glBindVertexArray(vao2);
