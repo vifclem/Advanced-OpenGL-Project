@@ -264,10 +264,9 @@ int main(int argc, char* argv[])
 		else if (ballPosY + maxX >= 1 && speedY >0) speedY *= -1;
 		else if (ballPosY + minX <= -1 && speedY < 0) speedY *= -1;
 
-		
+		//Right paddle IA
+		if (ballPosY + 0.2 <= 1 && ballPosY - 0.2 >= -1 ) paddleRPosY = ballPosY;
 
-
-		
 		glUseProgram(shaderProgram);
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, ballPosX, ballPosY);
