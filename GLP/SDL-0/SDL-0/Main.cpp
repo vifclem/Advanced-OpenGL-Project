@@ -4,6 +4,7 @@
 #include <fstream> 
 #include <string>
 #include "Shapes2D.h"
+#include "Window.h"
 using namespace std;
 
 #define GLEW_STATIC
@@ -12,8 +13,12 @@ string LoadShader(string fileName);
 
 float maxX = 0.1f;
 float minX = 0.0f;
-float updatePosX = 0;
-float updatePosY = 0;
+float ballPosX = 0;
+float ballPosY = 0;
+float paddleLPosX = 0;
+float paddleLPosY = 0;
+float paddleRPosX = 0;
+float paddleRPosY = 0;
 float speedX = 0.02;
 float speedY = 0.03;
 int main(int argc, char* argv[])
@@ -24,19 +29,18 @@ int main(int argc, char* argv[])
 	float vertices[] = {
 		// positions             // colors
 
-		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-		 0.0f, 0.1f, 0.0f,  0.0f, 1.0f, 0.0f,
-		 0.1f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-		 0.1f, 0.1f, 0.0f, 1.0f, 0.0f, 0.0f,
+		 0.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f,
+		 0.0f, 0.08f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.08f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
+		 0.08f, 0.08f, 0.0f, 1.0f, 0.0f, 0.0f,
 
 
 			 
 	};
 
-	vector<float> temp;
-	Shape2D::CreateRectangle(temp, Vector2(), Vector2(0.5, 0.2));
-	Shape2D::CreateRectangle(temp, Vector2(), Vector2(0.5, 0.2));
+	
 
+	
 	float vertices2[] = {
 		// positions             // colors
 
@@ -46,13 +50,17 @@ int main(int argc, char* argv[])
 
 		 -0.92f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
 		 -0.92f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
+		  -0.82f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
+		 -0.82f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
 		
 		  0.92f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
 		  0.92f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
+		  0.82f, 0.2f, 0.0f, 1.0f, 0.0f, 0.0f,
+		  0.82f, -0.2f, 0.0f,  0.0f, 1.0f, 0.0f,
 
 
 	};
-
+	
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
@@ -69,6 +77,7 @@ int main(int argc, char* argv[])
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
 	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
 	//SDL_WINDOW_OPENGL is a u32 flag !
+	
 
 
 	//Create an OpenGL compatible context to let glew draw on it
@@ -104,12 +113,8 @@ int main(int argc, char* argv[])
 
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-
 	//now that we have a vertex shader, let’s put the code text inside
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-
-
 	//aaaaand… Compile !
 	glCompileShader(vertexShader);
 
@@ -122,7 +127,6 @@ int main(int argc, char* argv[])
 
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
-
 	//now attach shaders to use to the program
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
@@ -136,6 +140,7 @@ int main(int argc, char* argv[])
 	glGenBuffers(1, &vbo2);
 
 	
+
 	unsigned int shaderProgram2;
 	shaderProgram2 = glCreateProgram();
 	//now attach shaders to use to the program
@@ -224,10 +229,16 @@ int main(int argc, char* argv[])
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 				case SDLK_UP:
-					updatePosY += 0.1;
+					paddleRPosY += 0.1;
 					break;
 				case SDLK_DOWN:
-					updatePosY -= 0.1;
+					paddleRPosY -= 0.1;
+					break;
+				case SDLK_z:
+					paddleLPosY += 0.1;
+					break;
+				case SDLK_s:
+					paddleLPosY -= 0.1;
 					break;
 				}
 			default:
@@ -238,29 +249,31 @@ int main(int argc, char* argv[])
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
 
-		updatePosX += speedX;
-		updatePosY += speedY;
+		ballPosX += speedX;
+		ballPosY += speedY;
 		
-		if (updatePosX + maxX >= 1) speedX *= -1;
-		else if (updatePosX + minX <= -1) speedX *= -1;
-		else if (updatePosY + maxX >= 1 && speedY >0) speedY *= -1;
-		else if (updatePosY + minX <= -1 && speedY < 0) speedY *= -1;
+		if (ballPosX + maxX >= 1) speedX *= -1;
+		else if (ballPosX + minX <= -1) speedX *= -1;
+		else if (ballPosY + maxX >= 1 && speedY >0) speedY *= -1;
+		else if (ballPosY + minX <= -1 && speedY < 0) speedY *= -1;
+
+		
 
 
 
 		glUseProgram(shaderProgram);
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
-		glUniform2f(location, updatePosX, updatePosY);
+		glUniform2f(location, ballPosX, ballPosY);
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-		glUseProgram(shaderProgram2);
+		
+		
 		glBindVertexArray(vao2);
-		glDrawArrays(GL_LINES, 0, 3);
-
-		glUseProgram(shaderProgram2);
-		glBindVertexArray(vao2);
-		glDrawArrays(GL_LINES, 2 , 4);
+		glUniform2f(location, paddleRPosX, paddleRPosY);
+		glDrawArrays(GL_TRIANGLE_STRIP, 6, 4);
+		
+		glUniform2f(location, paddleLPosX, paddleLPosY);
+		glDrawArrays(GL_TRIANGLE_STRIP, 2 , 4);
 
 		
 
@@ -269,6 +282,7 @@ int main(int argc, char* argv[])
 
 	}
 	// Quit
+	
 	SDL_DestroyWindow(Window);
 	SDL_GL_DeleteContext(Context);
 

@@ -93,7 +93,7 @@
   <ItemGroup>
     <None Include="FragShader2.shader" />
     <None Include="RGBFragShader.shader" />
-    <None Include="SimpleFragment.shader" />
+    <None Include="VertexShader2.shader" />
     <None Include="SimpleShader.shader" />
   </ItemGroup>
   <ItemGroup>
