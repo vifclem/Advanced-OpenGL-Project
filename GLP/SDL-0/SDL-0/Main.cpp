@@ -13,6 +13,8 @@ string LoadShader(string fileName);
 
 float maxX = 0.1f;
 float minX = 0.0f;
+float paddleMaxY = 0.3f;
+float paddleMinY = -0.3f;
 float ballPosX = 0;
 float ballPosY = 0;
 float paddleLPosX = 0;
@@ -21,6 +23,9 @@ float paddleRPosX = 0;
 float paddleRPosY = 0;
 float speedX = 0.02;
 float speedY = 0.03;
+int playerScore = 0;
+int ennemieScore = 0;
+
 int main(int argc, char* argv[])
 {
 
@@ -229,16 +234,16 @@ int main(int argc, char* argv[])
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 				case SDLK_UP:
-					paddleRPosY += 0.1;
+					if(paddleRPosY + paddleMaxY <= 1)paddleRPosY += 0.1;
 					break;
 				case SDLK_DOWN:
-					paddleRPosY -= 0.1;
+					if (paddleRPosY + paddleMinY >= -1)paddleRPosY -= 0.1;
 					break;
 				case SDLK_z:
-					paddleLPosY += 0.1;
+					if (paddleLPosY + paddleMaxY <= 1)paddleLPosY += 0.1;
 					break;
 				case SDLK_s:
-					paddleLPosY -= 0.1;
+					if (paddleLPosY + paddleMinY >= -1)paddleLPosY -= 0.1;
 					break;
 				}
 			default:
@@ -254,8 +259,8 @@ int main(int argc, char* argv[])
 		ballPosX += speedX;
 		ballPosY += speedY;
 		
-		if (ballPosX + maxX >= 1) speedX *= -1;
-		else if (ballPosX + minX <= -1) speedX *= -1;
+		if (ballPosX + maxX >= 1) {	playerScore += 1; speedX *= -1; }
+		else if (ballPosX + minX <= -1) { ennemieScore += 1; speedX *= -1; }
 		else if (ballPosY + maxX >= 1 && speedY >0) speedY *= -1;
 		else if (ballPosY + minX <= -1 && speedY < 0) speedY *= -1;
 
