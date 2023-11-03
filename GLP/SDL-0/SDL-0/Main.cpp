@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
 		 0.0f, 0.1f, 0.0f,  0.0f, 1.0f, 0.0f,
 		 0.1f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-		 0.0f, 0.1f, 0.0f, 1.0f, 0.0f, 0.0f,
+		 0.1f, 0.1f, 0.0f, 1.0f, 0.0f, 0.0f,
 
 
 			 
@@ -249,7 +249,7 @@ int main(int argc, char* argv[])
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, updatePosX, updatePosY);
 		glBindVertexArray(vao);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 		glUseProgram(shaderProgram2);
 		glBindVertexArray(vao2);
@@ -258,6 +258,8 @@ int main(int argc, char* argv[])
 		glUseProgram(shaderProgram2);
 		glBindVertexArray(vao2);
 		glDrawArrays(GL_LINES, 2 , 4);
+
+		
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer
 		

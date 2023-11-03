@@ -6,6 +6,7 @@ out vec4 ourColor;
 
 
 uniform vec2 updatePos;
+uniform vec2 updatePosPaddle;
 out vec4 newPos;
 in float redColor;
 
