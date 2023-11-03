@@ -3,7 +3,7 @@
 #include <glew.h>
 #include <fstream> 
 #include <string>
-
+#include "Shapes2D.h"
 using namespace std;
 
 #define GLEW_STATIC
@@ -19,11 +19,10 @@ float speedY = 0.03;
 int main(int argc, char* argv[])
 {
 
+	
+
 	float vertices[] = {
 		// positions             // colors
-
-
-	    
 
 		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
 		 0.0f, 0.1f, 0.0f,  0.0f, 1.0f, 0.0f,
@@ -33,6 +32,10 @@ int main(int argc, char* argv[])
 
 			 
 	};
+
+	vector<float> temp;
+	Shape2D::CreateRectangle(temp, Vector2(), Vector2(0.5, 0.2));
+	Shape2D::CreateRectangle(temp, Vector2(), Vector2(0.5, 0.2));
 
 	float vertices2[] = {
 		// positions             // colors
