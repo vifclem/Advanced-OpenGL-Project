@@ -14,7 +14,7 @@ float maxX = 0.4f;
 float minX = -0.4f;
 float updatePosX = 0;
 float updatePosY = 0;
-float speedX = 0.01;
+float speedX = 0.02;
 float speedY = 0.03;
 int main(int argc, char* argv[])
 {
@@ -32,6 +32,17 @@ int main(int argc, char* argv[])
 		 0.2f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f,
 
 			 
+	};
+
+	float vertices2[] = {
+		// positions             // colors
+
+
+		 0.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f,
+		 0.4f, 0.0f, 0.0f,  0.0f, 1.0f, 0.0f,
+		 0.2f, -0.4f, 0.0f,  0.0f, 0.0f, 1.0f,
+
+
 	};
 
 
@@ -69,10 +80,10 @@ int main(int argc, char* argv[])
 	//Put the color you want here for the background
 	glClearColor(0.0f, 0.5f, 0.7f, 1.0f);
 
+
+#pragma region vbo1
 	//Create an ID to be given at object generation
 	unsigned int vbo;
-
-
 	//Pass how many buffers should be created and the reference of the ID to get the value set
 	glGenBuffers(1, &vbo);
 
@@ -81,8 +92,6 @@ int main(int argc, char* argv[])
 	string fs = LoadShader("RGBFragShader.shader");
 	const char* fragmentShaderSource = fs.c_str();
 
-
-	
 
 
 	unsigned int vertexShader;
@@ -106,17 +115,29 @@ int main(int argc, char* argv[])
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
 
-
-
 	//now attach shaders to use to the program
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 
-	//and link it 
-	glLinkProgram(shaderProgram);
+#pragma endregion
 
-	//now that the program is complete, we can use it 
-	glUseProgram(shaderProgram);
+#pragma region vbo2
+	//Create an ID to be given at object generation
+	unsigned int vbo2;
+	//Pass how many buffers should be created and the reference of the ID to get the value set
+	glGenBuffers(1, &vbo2);
+
+	
+	unsigned int shaderProgram2;
+	shaderProgram2 = glCreateProgram();
+	//now attach shaders to use to the program
+	glAttachShader(shaderProgram2, vertexShader);
+	glAttachShader(shaderProgram2, fragmentShader);
+#pragma endregion
+
+
+	
+#pragma region vao
 
 	//Create one ID to be given at object generation
 	unsigned int vao;
@@ -130,6 +151,29 @@ int main(int argc, char* argv[])
 	//Finally send the vertices array in the array buffer 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// Color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+#pragma endregion
+
+
+
+#pragma region vao2
+	//Create one ID to be given at object generation
+	unsigned int vao2;
+	glGenVertexArrays(1, &vao2);
+	glBindVertexArray(vao2);
+
+
+	//Binds the buffer linked to this ID to the vertex array buffer to be rendered. Put 0 instead of vbo to reset the value.
+	glBindBuffer(GL_ARRAY_BUFFER, vbo2);
+
+	//Finally send the vertices array in the array buffer 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
 	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
@@ -138,12 +182,18 @@ int main(int argc, char* argv[])
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
+#pragma endregion
 
-	//Shader to use next
-	glUseProgram(shaderProgram);
 
-	//VAO to use next
-	glBindVertexArray(vao);
+	//and link it 
+	glLinkProgram(shaderProgram);
+	
+	//and link it 
+	glLinkProgram(shaderProgram2);
+	
+
+	
+
 
 	//Use depth management
 	glEnable(GL_DEPTH_TEST);
@@ -181,15 +231,14 @@ int main(int argc, char* argv[])
 
 
 
-		int location = glGetUniformLocation(shaderProgram, "updatePos");
-		
 		glUseProgram(shaderProgram);
+		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, updatePosX, updatePosY);
-		
-		
-		
-		
+		glBindVertexArray(vao);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
+		glUseProgram(shaderProgram2);
+		glBindVertexArray(vao2);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer

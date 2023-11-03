@@ -84,7 +84,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MultiFragmentShader.shader" />
+    <None Include="FragShader2.shader" />
     <None Include="RGBFragShader.shader" />
     <None Include="SimpleFragment.shader" />
     <None Include="SimpleShader.shader" />
