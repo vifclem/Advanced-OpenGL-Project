@@ -11,25 +11,48 @@ using namespace std;
 
 string LoadShader(string fileName);
 
-float maxX = 0.1f;
-float minX = 0.0f;
+#pragma region Max Ball Size
+float ballMaxX = 0.1f;
+float ballMinX = 0.0f;
+float ballMaxY = 0.08f;
+float ballMinY = 0.0f;
+#pragma endregion
+
+#pragma region Max paddle Size
 float paddleMaxY = 0.3f;
 float paddleMinY = -0.3f;
+float paddleMaxX = 0.1;
+#pragma endregion
+
+#pragma region Ball Position
 float ballPosX = 0;
 float ballPosY = 0;
+#pragma endregion
+
+#pragma region Paddle Position
 float paddleLPosX = 0;
 float paddleLPosY = 0;
 float paddleRPosX = 0;
 float paddleRPosY = 0;
+float paddleLOffsetX = -0.92;
+float paddleROffsetX = 0.82;
+#pragma endregion
+
+#pragma region Speed
 float speedX = 0.02;
 float speedY = 0.03;
+#pragma endregion
+
+#pragma region Score
 int playerScore = 0;
 int ennemieScore = 0;
+#pragma endregion
 
+
+bool LeftPaddleCollision();
+bool RightPaddleCollision();
 int main(int argc, char* argv[])
 {
-
-	
 
 	float vertices[] = {
 		// positions             // colors
@@ -39,13 +62,9 @@ int main(int argc, char* argv[])
 		 0.08f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
 		 0.08f, 0.08f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-
 			 
 	};
 
-	
-
-	
 	float vertices2[] = {
 		// positions             // colors
 
@@ -83,7 +102,6 @@ int main(int argc, char* argv[])
 	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
 	//SDL_WINDOW_OPENGL is a u32 flag !
 	
-
 
 	//Create an OpenGL compatible context to let glew draw on it
 	SDL_GLContext Context = SDL_GL_CreateContext(Window);
@@ -153,8 +171,6 @@ int main(int argc, char* argv[])
 	glAttachShader(shaderProgram2, fragmentShader);
 #pragma endregion
 
-
-	
 #pragma region vao
 
 	//Create one ID to be given at object generation
@@ -249,35 +265,41 @@ int main(int argc, char* argv[])
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
 		
-
+		//Speed off the ball
 		ballPosX += speedX;
 		ballPosY += speedY;
 		
-		if (ballPosX + maxX >= 1) {	playerScore += 1; speedX *= -1; }
-		else if (ballPosX + minX <= -1) { ennemieScore += 1; speedX *= -1; }
-		else if (ballPosY + maxX >= 1 && speedY >0) speedY *= -1;
-		else if (ballPosY + minX <= -1 && speedY < 0) speedY *= -1;
+		//Ball speed and position after the collision
+		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX;}
+		if (LeftPaddleCollision() && ballPosX > -1) { speedX *= -1; ballPosX = paddleLOffsetX + paddleMaxX; }
+		if (ballPosY + ballMaxX >= 1 && speedY > 0) speedY *= -1;
+		if (ballPosY + ballMinX <= -1 && speedY < 0) speedY *= -1;
+		if (ballPosX + ballMaxX >= 1) { playerScore += 1; speedX *= -1; ballPosX = 0; }
+	    if (ballPosX <= -1) { ennemieScore += 1; speedX *= -1; ballPosX = 0;}
+		
 
 		//Right paddle IA
 		if (ballPosY + 0.2 <= 1 && ballPosY - 0.2 >= -1 ) paddleRPosY = ballPosY;
 
-		//game over TEMPORAIRE 
-		if (playerScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); }
-		if (ennemieScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); }
+		//GAME OVER
+		if (playerScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); isRunning = false;}
+		if (ennemieScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context);  cout << "PLAYER LOST !" << endl; isRunning = false; }
 
+		//Shader for the ball
 		glUseProgram(shaderProgram);
 		int location = glGetUniformLocation(shaderProgram, "updatePos");
 		glUniform2f(location, ballPosX, ballPosY);
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		
-		
-		
+		//Shader for the paddle
 		glBindVertexArray(vao2);
 		glUniform2f(location, paddleRPosX, paddleRPosY);
 		glDrawArrays(GL_TRIANGLE_STRIP, 6, 4);
 		glUniform2f(location, paddleLPosX, paddleLPosY);
 		glDrawArrays(GL_TRIANGLE_STRIP, 2 , 4);
+
+		//Shader for the split line
 		glUniform2f(location, 0, 0);
 		glDrawArrays(GL_LINES, 0, 2);
 
@@ -287,7 +309,6 @@ int main(int argc, char* argv[])
 
 	}
 	// Quit
-	
 	SDL_DestroyWindow(Window);
 	SDL_GL_DeleteContext(Context);
 
@@ -310,4 +331,32 @@ string LoadShader(string fileName) {
 
 	myFile.close();
 	return fileText;
+}
+
+// Left paddle collision
+bool LeftPaddleCollision() {
+	
+	float xMinA = paddleLOffsetX;
+	float xMaxA = paddleLOffsetX + paddleMaxX;
+	float yMinA = paddleLPosY + paddleMinY;
+	float yMaxA = paddleLPosY + paddleMaxY;
+	float xMinB = ballPosX;
+	float xMaxB = ballPosX + ballMaxX;
+	float yMinB = ballPosY;
+	float yMaxB = ballPosY + ballMaxY;
+	return!(xMinA > xMaxB || xMaxA < xMinB || yMinA > yMaxB || yMaxA < yMinB);
+}
+
+// Right paddle collision
+bool RightPaddleCollision() {
+	
+	float xMinA = paddleROffsetX;
+	float xMaxA = paddleROffsetX + paddleMaxX;
+	float yMinA = paddleRPosY + paddleMinY;
+	float yMaxA = paddleRPosY + paddleMaxY;
+	float xMinB = ballPosX;
+	float xMaxB = ballPosX + ballMaxX;
+	float yMinB = ballPosY;
+	float yMaxB = ballPosY + ballMaxY;
+	return!(xMinA > xMaxB || xMaxA < xMinB || yMinA > yMaxB || yMaxA < yMinB);
 }
