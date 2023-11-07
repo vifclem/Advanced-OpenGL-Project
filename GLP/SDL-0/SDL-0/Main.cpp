@@ -41,6 +41,7 @@ float paddleROffsetX = 0.82;
 #pragma region Speed
 float speedX = 0.02;
 float speedY = 0.03;
+float paddleSpeed = 0;
 #pragma endregion
 
 #pragma region Score
@@ -240,24 +241,41 @@ int main(int argc, char* argv[])
 
 	bool isRunning = true;
 	while (isRunning) {
-		// Inputs
+
+		if ((paddleLPosY + paddleMaxY < 1) && paddleSpeed > 0)  paddleLPosY += paddleSpeed;
+		if ((paddleLPosY - 0.3> -1) && paddleSpeed < 0)  paddleLPosY += paddleSpeed;
+
 		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-			case SDL_QUIT:
-				isRunning = false;
-				break;
-			case SDL_KEYDOWN:
+		if (SDL_PollEvent(&event)) {
+			if (event.type == SDL_KEYUP) {
 				switch (event.key.keysym.sym) {
 				case SDLK_z:
-					if (paddleLPosY + paddleMaxY <= 1)paddleLPosY += 0.1;
+					 paddleSpeed = 0;
 					break;
 				case SDLK_s:
-					if (paddleLPosY + paddleMinY >= -1)paddleLPosY -= 0.1;
+					 paddleSpeed = 0;
+					break;
+
+				default:
 					break;
 				}
-			default:
-				break;
+			}
+			if (event.type == SDL_KEYDOWN) {
+				switch (event.key.keysym.sym) {
+				case SDLK_ESCAPE:
+					SDL_DestroyWindow(Window);
+					SDL_GL_DeleteContext(Context);
+					break;
+				case SDLK_z:
+					if (paddleLPosY + 0.4 <= 1) paddleSpeed = 0.03f;
+					break;
+				case SDLK_s:
+					if (paddleLPosY >= -1) paddleSpeed = -0.03f;
+					break;
+				
+				default:
+					break;
+				}
 			}
 			
 		}
@@ -265,9 +283,11 @@ int main(int argc, char* argv[])
 		//We draw from vertex 0 and we will be drawing 3 vertices
 		// Get the time in seconds 
 		
+
 		//Speed off the ball
 		ballPosX += speedX;
 		ballPosY += speedY;
+
 		
 		//Ball speed and position after the collision
 		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX;}
@@ -333,9 +353,10 @@ string LoadShader(string fileName) {
 	return fileText;
 }
 
+#pragma region Collisions
 // Left paddle collision
 bool LeftPaddleCollision() {
-	
+
 	float xMinA = paddleLOffsetX;
 	float xMaxA = paddleLOffsetX + paddleMaxX;
 	float yMinA = paddleLPosY + paddleMinY;
@@ -349,7 +370,7 @@ bool LeftPaddleCollision() {
 
 // Right paddle collision
 bool RightPaddleCollision() {
-	
+
 	float xMinA = paddleROffsetX;
 	float xMaxA = paddleROffsetX + paddleMaxX;
 	float yMinA = paddleRPosY + paddleMinY;
@@ -360,3 +381,6 @@ bool RightPaddleCollision() {
 	float yMaxB = ballPosY + ballMaxY;
 	return!(xMinA > xMaxB || xMaxA < xMinB || yMinA > yMaxB || yMaxA < yMinB);
 }
+
+#pragma endregion
+
