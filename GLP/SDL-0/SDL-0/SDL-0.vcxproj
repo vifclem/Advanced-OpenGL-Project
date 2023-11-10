@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
+    <ClInclude Include="gltext.h" />
     <ClInclude Include="maths\Maths.h" />
     <ClInclude Include="maths\Matrix4.h" />
     <ClInclude Include="maths\Matrix4Row.h" />

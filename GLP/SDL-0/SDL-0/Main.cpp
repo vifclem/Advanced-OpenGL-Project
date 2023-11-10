@@ -1,13 +1,20 @@
-﻿#include <iostream>
+﻿#define GLT_IMPLEMENTATION
+#define GLT_MANUAL_VIEWPORT
+#include <iostream>
 #include <SDL.h>
 #include <glew.h>
 #include <fstream> 
 #include <string>
 #include "Shapes2D.h"
 #include "Window.h"
+#include "gltext.h"
+
 using namespace std;
 
 #define GLEW_STATIC
+
+
+
 
 string LoadShader(string fileName);
 
@@ -52,6 +59,9 @@ int ennemieScore = 0;
 
 bool LeftPaddleCollision();
 bool RightPaddleCollision();
+
+
+
 int main(int argc, char* argv[])
 {
 
@@ -99,10 +109,14 @@ int main(int argc, char* argv[])
 	//Create a simple window
 	int width = 1000;
 	int height = 800;
+	gltViewport(width, height);
+
 	unsigned int center = SDL_WINDOWPOS_CENTERED;
 	SDL_Window* Window = SDL_CreateWindow("My window", center, center, width, height, SDL_WINDOW_OPENGL);
 	//SDL_WINDOW_OPENGL is a u32 flag !
 	
+	
+
 
 	//Create an OpenGL compatible context to let glew draw on it
 	SDL_GLContext Context = SDL_GL_CreateContext(Window);
@@ -238,9 +252,36 @@ int main(int argc, char* argv[])
 
 
 	//OMG WE FINALLY DRAW ! We use the GL_TRIANGLES primitive type
+	// 
+	
+
+	
+	// Initialize glText
+	gltInit();
+
+	// Creating text
+	GLTtext* text = gltCreateText();
+	gltSetText(text, "Hello World!");
+	
 
 	bool isRunning = true;
 	while (isRunning) {
+
+		
+		
+
+		// Begin text drawing (this for instance calls glUseProgram)
+		gltBeginDraw();
+
+		// Draw any amount of text between begin and end
+		gltColor(1.0f, 1.0f, 1.0f, 1.0f);
+		gltDrawText2D(text, 0, 0, 1);
+		
+		gltDrawText2DAligned(text,
+			(GLfloat)(width / 2),
+			(GLfloat)(height / 2),
+			3.0f,
+			GLT_CENTER, GLT_CENTER);
 
 		if ((paddleLPosY + paddleMaxY < 1) && paddleSpeed > 0)  paddleLPosY += paddleSpeed;
 		if ((paddleLPosY - 0.3> -1) && paddleSpeed < 0)  paddleLPosY += paddleSpeed;
@@ -325,12 +366,21 @@ int main(int argc, char* argv[])
 
 
 		SDL_GL_SwapWindow(Window); // Swapbuffer
+		// Finish drawing text
+		gltEndDraw();
 		
-
 	}
+
+	// Deleting text
+	gltDeleteText(text);
+
+	// Destroy glText
+	gltTerminate();
+
 	// Quit
 	SDL_DestroyWindow(Window);
 	SDL_GL_DeleteContext(Context);
+
 
 
 	cin.get();
@@ -359,7 +409,7 @@ bool LeftPaddleCollision() {
 
 	float xMinA = paddleLOffsetX;
 	float xMaxA = paddleLOffsetX + paddleMaxX;
-	float yMinA = paddleLPosY + paddleMinY;
+	float yMinA = paddleLPosY + paddleMinY - 0.005;
 	float yMaxA = paddleLPosY + paddleMaxY;
 	float xMinB = ballPosX;
 	float xMaxB = ballPosX + ballMaxX;
