@@ -341,11 +341,11 @@ int main(int argc, char* argv[])
 		
 
 		//Right paddle IA
-		if (ballPosY + 0.2 <= 1 && ballPosY - 0.2 >= -1 ) paddleRPosY = ballPosY;
+		if (ballPosY + 0.2 <= 1 && ballPosY - 0.2 >= -1) paddleRPosY = ballPosY;
 
 		//GAME OVER
-		if (playerScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context); isRunning = false;}
-		if (ennemieScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context);  cout << "PLAYER LOST !" << endl; isRunning = false; }
+		if (playerScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context);  cout << "TU AS GAGNER !" << endl; isRunning = false;}
+		if (ennemieScore >= 5) { SDL_DestroyWindow(Window); SDL_GL_DeleteContext(Context);  cout << "PLAYER LOST !" << endl; isRunning = false;}
 
 		//Shader for the ball
 		glUseProgram(shaderProgram);
@@ -370,6 +370,8 @@ int main(int argc, char* argv[])
 		// Finish drawing text
 		gltEndDraw();
 		
+		//Wait if the game run faster than the diced if we clamp fps
+		timer.delayTime();
 	}
 
 	// Deleting text
@@ -430,9 +432,9 @@ bool LeftPaddleCollision() {
 bool RightPaddleCollision() {
 
 	float xMinA = paddleROffsetX;
-	float xMaxA = paddleROffsetX + paddleMaxX;
-	float yMinA = paddleRPosY + paddleMinY;
-	float yMaxA = paddleRPosY + paddleMaxY;
+	float xMaxA = paddleROffsetX + paddleMaxX ;
+	float yMinA = paddleRPosY + paddleMinY + 0.12;
+	float yMaxA = paddleRPosY + paddleMaxY - 0.12;
 	float xMinB = ballPosX;
 	float xMaxB = ballPosX + ballMaxX;
 	float yMinB = ballPosY;
