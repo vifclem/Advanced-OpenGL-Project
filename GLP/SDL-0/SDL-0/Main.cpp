@@ -8,6 +8,7 @@
 #include "Shapes2D.h"
 #include "Window.h"
 #include "gltext.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 string LoadShader(string fileName);
 
 #pragma region Max Ball Size
-float ballMaxX = 0.1f;
+float ballMaxX = 0.08f;
 float ballMinX = 0.0f;
 float ballMaxY = 0.08f;
 float ballMinY = 0.0f;
@@ -43,11 +44,12 @@ float paddleRPosX = 0;
 float paddleRPosY = 0;
 float paddleLOffsetX = -0.92;
 float paddleROffsetX = 0.82;
+
 #pragma endregion
 
 #pragma region Speed
 float speedX = 0.02;
-float speedY = 0.03;
+float speedY = 0.02;
 float paddleSpeed = 0;
 #pragma endregion
 
@@ -59,7 +61,7 @@ int ennemieScore = 0;
 
 bool LeftPaddleCollision();
 bool RightPaddleCollision();
-
+void RandomizeBallYSpeed();
 
 
 int main(int argc, char* argv[])
@@ -263,13 +265,12 @@ int main(int argc, char* argv[])
 	GLTtext* text = gltCreateText();
 	gltSetText(text, "Hello World!");
 	
-
+	Timer timer;
+	float dt = 0;
 	bool isRunning = true;
 	while (isRunning) {
 
-		
-		
-
+		float dt = timer.computeDeltaTime() / 10;
 		// Begin text drawing (this for instance calls glUseProgram)
 		gltBeginDraw();
 
@@ -283,8 +284,8 @@ int main(int argc, char* argv[])
 			3.0f,
 			GLT_CENTER, GLT_CENTER);
 
-		if ((paddleLPosY + paddleMaxY < 1) && paddleSpeed > 0)  paddleLPosY += paddleSpeed;
-		if ((paddleLPosY - 0.3> -1) && paddleSpeed < 0)  paddleLPosY += paddleSpeed;
+		if ((paddleLPosY + paddleMaxY < 1) && paddleSpeed > 0)  paddleLPosY += paddleSpeed * dt;
+		if ((paddleLPosY - 0.3> -1) && paddleSpeed < 0)  paddleLPosY += paddleSpeed * dt;
 
 		SDL_Event event;
 		if (SDL_PollEvent(&event)) {
@@ -326,13 +327,13 @@ int main(int argc, char* argv[])
 		
 
 		//Speed off the ball
-		ballPosX += speedX;
-		ballPosY += speedY;
+		ballPosX += speedX * dt;
+		ballPosY += speedY * dt;
 
 		
 		//Ball speed and position after the collision
-		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX;}
-		if (LeftPaddleCollision() && ballPosX > -1) { speedX *= -1; ballPosX = paddleLOffsetX + paddleMaxX; }
+		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX; RandomizeBallYSpeed();}
+		if (LeftPaddleCollision() && ballPosX > -1) { speedX *= -1; ballPosX = paddleLOffsetX + paddleMaxX; RandomizeBallYSpeed();}
 		if (ballPosY + ballMaxX >= 1 && speedY > 0) speedY *= -1;
 		if (ballPosY + ballMinX <= -1 && speedY < 0) speedY *= -1;
 		if (ballPosX + ballMaxX >= 1) { playerScore += 1; speedX *= -1; ballPosX = 0; }
@@ -403,14 +404,21 @@ string LoadShader(string fileName) {
 	return fileText;
 }
 
+void RandomizeBallYSpeed() {
+	// Y speed and direction randomizer
+	srand(time(NULL));
+	if (rand() % 2 == 1) speedY = ((rand() % 5 + 11.0f) / 1000.0f);
+	if (rand() % 2 == 0) speedY = -((rand() % 5 + 11.0f) / 1000.0f);
+}
+
 #pragma region Collisions
 // Left paddle collision
 bool LeftPaddleCollision() {
 
 	float xMinA = paddleLOffsetX;
 	float xMaxA = paddleLOffsetX + paddleMaxX;
-	float yMinA = paddleLPosY + paddleMinY - 0.005;
-	float yMaxA = paddleLPosY + paddleMaxY;
+	float yMinA = paddleLPosY + paddleMinY + 0.12;
+	float yMaxA = paddleLPosY + paddleMaxY - 0.12;
 	float xMinB = ballPosX;
 	float xMaxB = ballPosX + ballMaxX;
 	float yMinB = ballPosY;
