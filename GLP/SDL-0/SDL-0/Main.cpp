@@ -61,7 +61,7 @@ int ennemieScore = 0;
 
 bool LeftPaddleCollision();
 bool RightPaddleCollision();
-void RandomizeBallYSpeed();
+void RandomBallYSpeed();
 
 
 int main(int argc, char* argv[])
@@ -332,8 +332,8 @@ int main(int argc, char* argv[])
 
 		
 		//Ball speed and position after the collision
-		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX; RandomizeBallYSpeed();}
-		if (LeftPaddleCollision() && ballPosX > -1) { speedX *= -1; ballPosX = paddleLOffsetX + paddleMaxX; RandomizeBallYSpeed();}
+		if (RightPaddleCollision() && ballPosX < 1) { speedX *= -1; ballPosX = paddleROffsetX - ballMaxX; RandomBallYSpeed();}
+		if (LeftPaddleCollision() && ballPosX > -1) { speedX *= -1; ballPosX = paddleLOffsetX + paddleMaxX; RandomBallYSpeed();}
 		if (ballPosY + ballMaxX >= 1 && speedY > 0) speedY *= -1;
 		if (ballPosY + ballMinX <= -1 && speedY < 0) speedY *= -1;
 		if (ballPosX + ballMaxX >= 1) { playerScore += 1; speedX *= -1; ballPosX = 0; }
@@ -404,9 +404,9 @@ string LoadShader(string fileName) {
 	return fileText;
 }
 
-void RandomizeBallYSpeed() {
-	// Y speed and direction randomizer
+void RandomBallYSpeed() {
 	srand(time(NULL));
+	
 	if (rand() % 2 == 1) speedY = ((rand() % 5 + 11.0f) / 1000.0f);
 	if (rand() % 2 == 0) speedY = -((rand() % 5 + 11.0f) / 1000.0f);
 }
