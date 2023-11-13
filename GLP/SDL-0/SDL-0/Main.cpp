@@ -370,7 +370,7 @@ int main(int argc, char* argv[])
 		// Finish drawing text
 		gltEndDraw();
 		
-		//Wait if the game run faster than the diced if we clamp fps
+		//Wait if the game run faster than the diced fps
 		timer.delayTime();
 	}
 
